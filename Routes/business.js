@@ -3,7 +3,7 @@ const { Businesses } = require("../Models/model");
 const router = express.Router();
 
 //api for creating a new business / organisation
-router.post("/newuser", async (req, res) => {
+router.post("/newbss", async (req, res) => {
   const bss_check = await Businesses.findOne({
     bss_name: { $eq: req.body.bss_name },
   });

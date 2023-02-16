@@ -5,7 +5,7 @@ const router = express.Router();
 //api for creating a new user
 router.post("/new", async (req, res) => {
   const user_tel_check = await Users.findOne({
-    tel: { $eq: req.body.phone },
+    tel: { $eq: req.body.tel },
   });
   if (user_tel_check) {
     res.send({
@@ -14,9 +14,9 @@ router.post("/new", async (req, res) => {
     });
   } else {
     const user = new Users({
+      tel: parseInt(req.body.tel),
       name: req.body.name,
       email: req.body.email,
-      tel: parseInt(req.body.tel),
       password: req.body.password,
       confirm_password: req.body.confirm_password,
     });
@@ -39,13 +39,28 @@ router.post("/new", async (req, res) => {
 });
 
 //api for logging in a user
-router.post("/user", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const current_user = await Users.find({
-      $and: [{ password: req.body.password }, { tel: req.body.tel }],
+      $and: [{ email: req.body.email }, { password: req.body.password }],
     });
     if (current_user) {
       res.send({ user: current_user, status: true, data: "Login Sucessful" });
+    } else {
+      res.send({ status: false, data: "No matching details" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.send({ status: false, data: "An Error Occured", result: error });
+  }
+});
+router.post("/userlog", async (req, res) => {
+  try {
+    const user_logs = await Users.find({
+      $and: [{ password: req.body.password }, { email: req.body.email }],
+    });
+    if (user_logs) {
+      res.send({ user: user_logs, status: true });
     } else {
       res.send({ status: false, data: "No matching details" });
     }
