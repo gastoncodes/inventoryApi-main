@@ -133,5 +133,25 @@ router.get("/bss", async (req, res) => {
     res.send({ status: false, data: "Un expected error", result: error });
   }
 });
+//gets single business basing on the id
+router.get("/bss/:id", async (req, res) => {
+  try {
+    const bss = await Businesses.findById(req.params.id);
+    if (bss) {
+      res.send({
+        status: true,
+        result: bss,
+      });
+    } else {
+      res.send({
+        status: false,
+        data: "No business found",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.send({ status: false, data: "An Error Occured", result: error });
+  }
+});
 
 module.exports = router;
