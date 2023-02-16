@@ -74,6 +74,9 @@ const ProductsSchema = new mongoose.Schema({
   pdt_price: {
     type: String,
   },
+  bss_id: {
+    type: String,
+  },
   pdt_image: {
     type: String,
   },

@@ -15,10 +15,12 @@ we shall send them to the database with the id of the business so that we can ea
 
 */
 router.post("/newpdt", async (req, res) => {
-  const pdtcheck = await Products.find({
-    pdt_name: { $eq: req.body.pdt_name },
-    pdt_brand: { $eq: req.body.pdt_brand },
-    bss_id: { $eq: req.body.bss_id },
+  const pdtcheck = await Products.findOne({
+    $and: [
+      { bss_id: req.body.bss_id },
+      { pdt_name: req.body.pdt_name },
+      { pdt_brand: req.body.pdt_brand },
+    ],
   });
   if (pdtcheck) {
     res.send({
@@ -32,6 +34,7 @@ router.post("/newpdt", async (req, res) => {
       pdt_quantity: req.body.pdt_quantity,
       pdt_description: req.body.pdt_description,
       pdt_price: req.body.pdt_price,
+      bss_id: req.body.bss_id,
       // images and bar code scanner shall be handled later.
     });
     try {
