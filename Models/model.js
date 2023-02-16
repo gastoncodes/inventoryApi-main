@@ -34,6 +34,7 @@ const UsersSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+id(UsersSchema);
 const Users = new mongoose.model("users", UsersSchema);
 
 //model for creating a new business
@@ -55,6 +56,7 @@ const BusinessSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+id(BusinessSchema);
 const Businesses = new mongoose.model("businesses", BusinessSchema);
 
 //model for creating a new product
@@ -92,6 +94,7 @@ const ProductsSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+id(ProductsSchema);
 const Products = new mongoose.model("products", ProductsSchema);
 
 module.exports = {
